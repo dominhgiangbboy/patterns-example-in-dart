@@ -64,3 +64,81 @@ class GuestUserFactory implements UserFactory {
     return GuestUser('guest1', 'guest1@gg.vn');
   }
 }
+
+/// You can apply this pattern to UI rendering as well.
+/// For example, you can create a factory for rendering a button.
+abstract class RunGame {
+  void render();
+  Button createButton();
+}
+
+abstract class Button {
+  void render();
+  void onClick();
+  String get text;
+}
+
+/// Implements of the [RunGame] interfaces
+class RunGameForm implements RunGame {
+  @override
+  Button createButton() {
+    return RunButton();
+  }
+
+  @override
+  void render() {
+    final button = createButton();
+    button.render();
+  }
+}
+
+class JumpGameForm implements RunGame {
+  @override
+  Button createButton() {
+    return JumpButton();
+  }
+
+  @override
+  void render() {
+    final button = createButton();
+    button.render();
+    print(button.text);
+
+    /// Show button in game here
+  }
+}
+
+/// Implements of the [Button] interfaces
+class JumpButton implements Button {
+  @override
+  void onClick() {
+    print('Jump');
+  }
+
+  @override
+  void render() {
+    print('Render Jump button');
+  }
+
+  @override
+  String get text => 'Jump';
+}
+
+class RunButton implements Button {
+  @override
+  void onClick() {
+    print('Run');
+  }
+
+  @override
+  void render() {
+    print('Render Run button');
+  }
+
+  @override
+  String get text => 'Run';
+}
+
+void renderGame(RunGame game) {
+  game.render();
+}
